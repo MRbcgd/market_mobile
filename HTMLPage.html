@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+    </script>
+    <title>MARKET_MOBILE</title>
+  </head>
+  <body>
+    <div data-role="page">
+      <div data-role="header">
+        <h1>Store</h1>
+      </div>
+      <div data-role="content">
+        <ul id="listview" data-role="listview" data-inset="true" data-filter="true">
+          <li data-role="list-divider">products</li>
+          <% products.forEach(function(item,index){ %>
+            <li class="product" data-index="<%= item.index %>">
+              <a href="#">
+                <img src="chrom.png">
+                <h3><%= item.name %></h3>
+                <p><%= item.price %> 원</p>
+                <span class="ui-li-count"><%= item.count %></span>
+              </a>
+              <a href="#" data-icon="heart" data-index="<%= item.index %>"></a>
+            </li>
+            <% }) %>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
