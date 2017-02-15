@@ -65,7 +65,7 @@ io.sockets.on('connection',function(socket){
     cart[index].index=index;
     cart[index].timerID=setTimeout(function(){
       onReturn(index);
-    },10*60*100);
+    },1*60*100);
   })
   //BUY
   socket.on('buy',function(index){

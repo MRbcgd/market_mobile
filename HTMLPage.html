@@ -7,7 +7,47 @@
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+      $(document).ready(function(){
+        function changeIcon(target, from, to){
+          $(target).removeClass(from).addClass(to)
+        }
+        function changeCount(index,count){
+          $('li[data-index='+index+'] .ul-li-count').html(count)
+        }
 
+        var socket=io.connect()
+
+        socket.on('count',function(data){
+          changeCount(data.index,data.count)
+        })
+        $('.product > a[data-icon]').click(function(){
+          if($(this).attr('toggle') !='off'){
+            var index=$(this).attr('data-index')
+
+            socket.emit('cart',Number(index))
+
+            changeIcon(this,'ui-icon-heart','ui-icon-check')
+
+            $(this).attr('toggle','off')
+          }
+          else{
+            var index=$(this).attr('data-index')
+
+            if(confirm('물건을 구매하시겠습니까?')){
+              socket.emit('buy',Number(index))
+
+              $(this).parent().remove()
+              $('#listview').listview('refresh')
+            } else{
+              socket.emit('return',Number(index))
+
+              changeIcon(this,'ui-icon-check','ui-icon-heart')
+            }
+
+            $(this).attr('toggle','on')
+          }
+        })
+      })
     </script>
     <title>MARKET_MOBILE</title>
   </head>
